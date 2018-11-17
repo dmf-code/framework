@@ -40,8 +40,9 @@ class Dispatcher
 
     public static function getTemplateFileName($filename)
     {
+
         return sprintf(
-            '%s\\App\\%s\\Tpl\\%s\\%s.php',
+            '%s/App/%s/Tpl/%s/%s.php',
             ROOT_PATH,
             self::$args['module'],
             self::$args['controller'],
