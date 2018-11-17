@@ -14,7 +14,7 @@ class Route
     //检查路由信息
     public static function check()
     {
-        self::invoke(Dispatcher::getClassName());
+        self::invoke(Dispatcher::getAction(), Dispatcher::getClassName());
     }
 
     //反射函数
