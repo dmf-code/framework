@@ -38,6 +38,15 @@ class Dispatcher
         return sprintf('App\\%s\\Controller\\%s', self::$args['module'], self::$args['controller']);
     }
 
+    public static function getTemplateFileName($filename)
+    {
+        return sprintf(
+            'App\\%s\\Tpl\\%s\\%s.php',
+            self::$args['module'], self::$args['controller'],
+            $filename ?? self::getAction()
+        );
+    }
+
     //url映射到控制器
     public static function dispatch()
     {
