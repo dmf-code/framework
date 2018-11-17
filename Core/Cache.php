@@ -28,7 +28,7 @@ class Cache
      */
     public function display($filename,$page=null){
 
-        $tpl_file = Dispatcher::getTemplateFileName();
+        $tpl_file = Dispatcher::getTemplateFileName($filename);
 
         $url_html_suffix = Core::get('Config')->get('Rice')['url_html_suffix'];
         $url_html_suffix = explode('|', $url_html_suffix)[0];
