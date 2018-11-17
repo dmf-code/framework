@@ -1,0 +1,14 @@
+{
+    "name": "rice/framework",
+    "description": "The is framework",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "DMF",
+            "email": "1015814408@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
