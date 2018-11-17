@@ -79,7 +79,7 @@ class Core
     //创建当前的类
     public static function exec()
     {
-        $class = Dispatcher::getClassName();
+        $class = Dispatcher::getControllerClassName();
 
         if (class_exists($class)) {
             self::$instances[md5($class)] = new $class();
