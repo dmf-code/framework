@@ -42,7 +42,7 @@ class Dispatcher
     {
 
         return sprintf(
-            '%s/App/%s/Tpl/%s/%s.php',
+            '%s\\App\\%s\\Tpl\\%s\\%s.php',
             ROOT_PATH,
             self::$args['module'],
             self::$args['controller'],
@@ -53,7 +53,7 @@ class Dispatcher
     public static function getCacheFileName($filename, $suffix, $page = 0)
     {
         return sprintf(
-            '%s/Caches/%s/%s/%s_%s.%s',
+            '%s\\Caches\\%s\\%s\\%s_%s.%s',
             ROOT_PATH,
             self::$args['module'],
             self::$args['controller'],

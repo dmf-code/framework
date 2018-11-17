@@ -37,7 +37,7 @@ class Config
 
     public function get($key)
     {
-        if (isset($this->_var[$key])) {
+        if (isset($this->vars[$key])) {
             return $this->vars[$key];
         }
         return null;
