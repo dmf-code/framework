@@ -35,7 +35,7 @@ class Dispatcher
 
     public static function getControllerClassName()
     {
-        return sprintf('App/%s/Controller/%s', self::$args['module'], self::$args['controller']);
+        return sprintf('App\\%s\\Controller\\%s', self::$args['module'], self::$args['controller']);
     }
 
     public static function getTemplateFileName($filename)
