@@ -26,7 +26,7 @@ class Controller
     public function display($name = null, $page = null)
     {
         if (empty($name)) {
-            $name = ACTION_NAME;
+            $name = Dispatcher::getAction();
             $this->cache->display($name, $page);
         } else {
             $this->cache->display($name, $page);
