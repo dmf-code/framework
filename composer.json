@@ -17,10 +17,8 @@
 			"Utility/Common.php",
 			"Core/Core.php"
 		],
-		"autoload": {
-			"psr-4": {
-				"Rice\\": "/"
-			}
+		"psr-4": {
+			"Rice\\": "/"
 		}
 	}
 }
