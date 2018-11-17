@@ -33,9 +33,9 @@ class Dispatcher
         return self::$args['path_info'];
     }
 
-    public static function getClassName()
+    public static function getControllerClassName()
     {
-        return sprintf('App\\%s\\%s\\%s', self::$args['module'], self::$args['controller'], self::$args['action']);
+        return sprintf('App\\%s\\Controller\\%s', self::$args['module'], self::$args['controller']);
     }
 
     //url映射到控制器
