@@ -16,72 +16,83 @@
 
 date_default_timezone_set('Asia/Shanghai');
 
+
+if (!function_exists('myErrorHandler')) {
+    // error handler function
+    function myErrorHandler($errno, $errstr, $errfile, $errline)
+    {
+        if (!(error_reporting() & $errno)) {
+            // This error code is not included in error_reporting, so let it fall
+            // through to the standard PHP error handler
+            return false;
+        }
+        $str = date('Y-m-d H:i:s', time()).' ';
+        switch ($errno) {
+            case E_USER_ERROR:
+                $str .= "<b>My ERROR</b> [$errno] $errstr<br />\n"
+                    ."  Fatal error on line $errline in file $errfile"
+                    .", PHP " . PHP_VERSION . " (" . PHP_OS . ")<br />\n"
+                    ."Aborting...<br />\n";
+                file_put_contents(dirname(dirname(__FILE__)).'/error_log.txt', $str, FILE_APPEND | LOCK_EX);
+                exit(1);
+                break;
+
+            case E_USER_WARNING:
+                $str .= "<b>My WARNING</b> [$errno] $errstr<br />\n";
+                break;
+
+            case E_USER_NOTICE:
+                $str .= "<b>My NOTICE</b> [$errno] $errstr<br />\n";
+                break;
+
+            default:
+                $str .= "Unknown error type: [$errno] $errstr<br />\n"."  Fatal error on line $errline in file $errfile"
+                    .", PHP " . PHP_VERSION . " (" . PHP_OS . ")<br />\n";
+                break;
+        }
+        file_put_contents(dirname(dirname(__FILE__)).'/error_log.txt', $str, FILE_APPEND | LOCK_EX);
+        /* Don't execute PHP internal error handler */
+        return true;
+    }
+
+    // set to the user defined error handler
+    $error_handler = set_error_handler("myErrorHandler");
+}
+
 /*
  * 因为php5无法接受E_ERROR错误，所以需要以下函数
  */
-register_shutdown_function("shutdown_handler");
-function shutdown_handler() {
-    define('E_FATAL', E_ERROR | E_USER_ERROR | E_CORE_ERROR |
-        E_COMPILE_ERROR | E_RECOVERABLE_ERROR | E_PARSE);
-    $error = error_get_last();
-    if ($error && ($error["type"] === ($error["type"] & E_FATAL))) {
-        $errno = $error["type"];
-        $errfile = $error["file"];
-        $errline = $error["line"];
-        $errstr = $error["message"];
-        myErrorHandler($errno, $errstr, $errfile, $errline);
+if (!function_exists('shutdown_handler')) {
+    function shutdown_handler()
+    {
+        define('E_FATAL', E_ERROR | E_USER_ERROR | E_CORE_ERROR |
+            E_COMPILE_ERROR | E_RECOVERABLE_ERROR | E_PARSE);
+        $error = error_get_last();
+        if ($error && ($error["type"] === ($error["type"] & E_FATAL))) {
+            $errno = $error["type"];
+            $errfile = $error["file"];
+            $errline = $error["line"];
+            $errstr = $error["message"];
+            myErrorHandler($errno, $errstr, $errfile, $errline);
+        }
     }
+    register_shutdown_function("shutdown_handler");
 }
-// error handler function
-function myErrorHandler($errno, $errstr, $errfile, $errline)
-{
-    if (!(error_reporting() & $errno)) {
-        // This error code is not included in error_reporting, so let it fall
-        // through to the standard PHP error handler
-        return false;
-    }
-    $str = date('Y-m-d H:i:s',time()).' ';
-    switch ($errno) {
-        case E_USER_ERROR:
-            $str .= "<b>My ERROR</b> [$errno] $errstr<br />\n"
-            ."  Fatal error on line $errline in file $errfile"
-            .", PHP " . PHP_VERSION . " (" . PHP_OS . ")<br />\n"
-            ."Aborting...<br />\n";
-            file_put_contents(dirname(dirname(__FILE__)).'/error_log.txt',$str,FILE_APPEND | LOCK_EX);
-            exit(1);
-            break;
-
-        case E_USER_WARNING:
-            $str .= "<b>My WARNING</b> [$errno] $errstr<br />\n";
-            break;
-
-        case E_USER_NOTICE:
-            $str .= "<b>My NOTICE</b> [$errno] $errstr<br />\n";
-            break;
-
-        default:
-            $str .= "Unknown error type: [$errno] $errstr<br />\n"."  Fatal error on line $errline in file $errfile"
-                .", PHP " . PHP_VERSION . " (" . PHP_OS . ")<br />\n";
-            break;
-    }
-    file_put_contents(dirname(dirname(__FILE__)).'/error_log.txt',$str,FILE_APPEND | LOCK_EX);
-    /* Don't execute PHP internal error handler */
-    return true;
-}
-
-// set to the user defined error handler
-$error_handler = set_error_handler("myErrorHandler");
 
 
 /**
  * 是否是AJAx提交的
  * @return bool
  */
-function isAjax(){
-    if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
-        return true;
-    }else{
-        return false;
+if (function_exists('isAjax')) {
+    function isAjax()
+    {
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
@@ -90,10 +101,12 @@ function isAjax(){
  * @return string
  *
  */
-
-function url() {
-    $Config = \Rice\Core\Core::get('Config');
-    if ($Config['Rice']['show_url_index_php'] == false) {
-        //return
+if (!function_exists('url')) {
+    function url()
+    {
+        $Config = \Rice\Core\Core::get('Config');
+        if ($Config['Rice']['show_url_index_php'] == false) {
+            //return
+        }
     }
 }

@@ -8,14 +8,44 @@
 
 namespace Rice\Core;
 
-class Dispatcher{
+class Dispatcher
+{
+
+    private static $args = [];
+
+    public static function getModule()
+    {
+        return self::$args['module'];
+    }
+
+    public static function getController()
+    {
+        return self::$args['controller'];
+    }
+
+    public static function getAction()
+    {
+        return self::$args['action'];
+    }
+
+    public static function getPathInfo()
+    {
+        return self::$args['path_info'];
+    }
+
+    public static function getClassName()
+    {
+        return sprintf('App\\%s\\%s\\%s', self::$args['module'], self::$args['controller'], self::$args['action']);
+    }
+
     //url映射到控制器
-    static public function dispatch(){
+    public static function dispatch()
+    {
         @$path_info = $_SERVER['PATH_INFO'];
 
-        do{
-            if(!empty($_SERVER['QUERY_STRING'])){
-                if(!empty($_GET['m'])&&!empty($_GET['c']&&!empty($_GET['a']))){
+        do {
+            if (!empty($_SERVER['QUERY_STRING'])) {
+                if (!empty($_GET['m'])&&!empty($_GET['c']&&!empty($_GET['a']))) {
                     $varModule = $_GET['m'];
                     $varController = $_GET['c'];
                     $varAction = $_GET['a'];
@@ -24,18 +54,17 @@ class Dispatcher{
             }
 
             //路径判断是否为空
-            if(empty($path_info)){
+            if (empty($path_info)) {
                 $varModule = 'test';
                 $varController = 'index';
                 $varAction = 'index';
                 $urlCase = '';
 
-            }else{
-
+            } else {
                 //去除首尾的'/'
-                $path_info = trim($path_info,'/');
+                $path_info = trim($path_info, '/');
                 //以/为分隔符，分配给数组
-                $url = explode('/',$path_info);
+                $url = explode('/', $path_info);
 
                 $varModule = $url[0];
                 $varController = $url[1];
@@ -43,12 +72,11 @@ class Dispatcher{
                 //$urlCase = ;
             }
 
-        }while(false);
-        //定义全局变量
-        define('MODULE_NAME',ucfirst($varModule));
-        define('CONTROLLER_NAME',ucfirst($varController));
-        define('ACTION_NAME',ucfirst($varAction));
-        define('PATH_INFO',$_SERVER['PATH_INFO']);
-        //var_dump(MODULE_NAME, CONTROLLER_NAME, ACTION_NAME);
+        } while (false);
+        //保存变量
+        self::$args['module'] = ucfirst($varModule);
+        self::$args['controller'] = ucfirst($varController);
+        self::$args['action'] = ucfirst($varAction);
+        self::$args['path_info'] = $_SERVER['PATH_INFO'];
     }
 }

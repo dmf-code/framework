@@ -9,7 +9,8 @@
 namespace Rice\Core;
 
 
-class Controller{
+class Controller
+{
 
     public $cache;
     //控制器参数
@@ -22,19 +23,21 @@ class Controller{
     }
 
     //封装一个模板显示函数
-    public function display($name=null,$page=null){
-        if(empty($name)){
+    public function display($name = null, $page = null)
+    {
+        if (empty($name)) {
             $name = ACTION_NAME;
-            $this->cache->display($name,$page);
-        }else{
-            $this->cache->display($name,$page);
+            $this->cache->display($name, $page);
+        } else {
+            $this->cache->display($name, $page);
         }
     }
 
     /*
      * 分配变量值进模板
      */
-    public function assign($key,$val){
+    public function assign($key, $val)
+    {
 
         $this->cache->set($key, $val);
         $this->cache->{$key} = $val;
@@ -44,7 +47,8 @@ class Controller{
     /*
      * 返回数据到模板
      */
-    public function getVal($key){
+    public function getVal($key)
+    {
         return $this->cache->get($key);
     }
 
@@ -55,7 +59,8 @@ class Controller{
      * $jumpUrl 跳转的url
      * $waitSecond  等待多少秒跳转
      */
-    function dispatchJump($message,$error,$jumpUrl,$waitSecond=3){
+    public function dispatchJump($message, $error, $jumpUrl, $waitSecond = 3)
+    {
 
         require_once ROOT_PATH . '/Tpl/dispatch_jump.tpl';
     }
@@ -63,10 +68,11 @@ class Controller{
     /*
      * 获取提交数据
      */
-    function getRequest($name){
+    public function getRequest($name)
+    {
         $method = $_SERVER['REQUEST_METHOD'];
         $_PUT = null;
-        switch($method){
+        switch ($method) {
             case 'GET':
                 $data = $_GET[$name];
                 break;

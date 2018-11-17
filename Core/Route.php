@@ -12,17 +12,16 @@ namespace Rice\Core;
 class Route
 {
     //检查路由信息
-    public static function check(){
-        self::invoke(ACTION_NAME,MODULE_NAME.'\\Controller\\'.CONTROLLER_NAME);
-        //echo MODULE_NAME.'<br/>'.CONTROLLER_NAME.'<br/>'.ACTION_NAME.'<br/>';
-        #echo '进入check函数<br/>';
+    public static function check()
+    {
+        self::invoke(Dispatcher::getClassName());
     }
 
     //反射函数
-    public static function invoke($name,$className){
-        //echo $name,' ',$className;
+    public static function invoke($name, $className)
+    {
         //创建反射方法对象
-        $reflect = new \ReflectionMethod(Core::instance($className),$name);
+        $reflect = new \ReflectionMethod(Core::instance($className), $name);
         //获取当前方法的参数
         $params = $reflect->getParameters();
         $args = array();
@@ -33,11 +32,10 @@ class Route
             $args[] = $param->getDefaultValue();
         }
 
-        if(empty($args)){
+        if (empty($args)) {
             return $reflect->invoke($obj);
-        }
-        else{
-            return $reflect->invokeArgs($obj,$args);
+        } else {
+            return $reflect->invokeArgs($obj, $args);
         }
     }
 }
