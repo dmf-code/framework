@@ -15,6 +15,9 @@
 		"files": [
 			"Utility/Common.php",
 			"Core/Core.php"
-		]
+		],
+		"psr-4": {
+			"Rice\\": "rice/framework/"	
+		},
 	}
 }
