@@ -13,6 +13,7 @@
     "require": {},
 	"autoload": {
 		"files": [
+			"rice/framework/Utility/Common.php",
 			"rice/framework/Core/Loader.php",
 			"rice/framework/Core/Core.php"
 		]
