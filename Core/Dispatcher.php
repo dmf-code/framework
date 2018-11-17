@@ -41,9 +41,24 @@ class Dispatcher
     public static function getTemplateFileName($filename)
     {
         return sprintf(
-            'App\\%s\\Tpl\\%s\\%s.php',
-            self::$args['module'], self::$args['controller'],
+            '%s\\App\\%s\\Tpl\\%s\\%s.php',
+            ROOT_PATH,
+            self::$args['module'],
+            self::$args['controller'],
             $filename ?? self::getAction()
+        );
+    }
+
+    public static function getCacheFileName($filename, $suffix, $page = 0)
+    {
+        return sprintf(
+            '%s/Caches/%s/%s/%s_%s.%s',
+            ROOT_PATH,
+            self::$args['module'],
+            self::$args['controller'],
+            $filename ?? self::getAction(),
+            $page,
+            $suffix
         );
     }
 

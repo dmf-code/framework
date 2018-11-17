@@ -28,30 +28,15 @@ class Cache
      */
     public function display($filename,$page=null){
 
-        $tpl_file = ROOT_PATH.'/'.$this->module.'/Tpl/'.$this->controller.'/'.$filename.'.php';
+        $tpl_file = Dispatcher::getTemplateFileName();
 
         $url_html_suffix = Core::get('Config')->get('Rice')['url_html_suffix'];
         $url_html_suffix = explode('|', $url_html_suffix)[0];
 
         if (!$page) {
-            $cache_file = sprintf(
-                '%s/Caches/%s/%s/%s.%s',
-                ROOT_PATH,
-                $this->module,
-                $this->controller,
-                $filename,
-                $url_html_suffix
-            );
+            $cache_file = Dispatcher::getCacheFileName($filename, $url_html_suffix);
         } else {
-            $cache_file = sprintf(
-                '%s/Caches/%s/%s/%s_%s.%s',
-                ROOT_PATH,
-                $this->module,
-                $this->controller,
-                $filename,
-                $page,
-                $url_html_suffix
-            );
+            $cache_file = Dispatcher::getCacheFileName($filename, $url_html_suffix, $page);
         }
 
         //判断是否存在缓存目录
