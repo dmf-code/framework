@@ -1,7 +1,6 @@
 {
     "name": "rice/framework",
     "description": "The is framework",
-    "type": "library",
     "license": "MIT",
     "authors": [
         {
