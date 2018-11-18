@@ -33,7 +33,8 @@ if (!function_exists('myErrorHandler')) {
                     ."  Fatal error on line $errline in file $errfile"
                     .", PHP " . PHP_VERSION . " (" . PHP_OS . ")<br />\n"
                     ."Aborting...<br />\n";
-                file_put_contents(dirname(dirname(__FILE__)).'/error_log.txt', $str, FILE_APPEND | LOCK_EX);
+                var_dump($str);
+                #file_put_contents(dirname(dirname(__FILE__)).'/error_log.txt', $str, FILE_APPEND | LOCK_EX);
                 exit(1);
                 break;
 
@@ -50,7 +51,8 @@ if (!function_exists('myErrorHandler')) {
                     .", PHP " . PHP_VERSION . " (" . PHP_OS . ")<br />\n";
                 break;
         }
-        file_put_contents(dirname(dirname(__FILE__)).'/error_log.txt', $str, FILE_APPEND | LOCK_EX);
+        var_dump($str);
+        #file_put_contents(dirname(dirname(__FILE__)).'/error_log.txt', $str, FILE_APPEND | LOCK_EX);
         /* Don't execute PHP internal error handler */
         return true;
     }
