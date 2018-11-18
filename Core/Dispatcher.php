@@ -102,6 +102,6 @@ class Dispatcher
         self::$args['module'] = ucfirst($varModule);
         self::$args['controller'] = ucfirst($varController);
         self::$args['action'] = ucfirst($varAction);
-        self::$args['path_info'] = $_SERVER['PATH_INFO'];
+        self::$args['path_info'] = $path_info;
     }
 }
