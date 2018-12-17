@@ -30,10 +30,9 @@ class Core
         Dispatcher::dispatch();
 
         //创建控制器对象
-        self::exec();
+        self::setInstance();
 
-        //路由检测和反射
-        Route::check();
+        Controller::invoke();
     }
 
     /*
@@ -77,7 +76,7 @@ class Core
         Core::get('Config');
     }
     //创建当前的类
-    public static function exec()
+    public static function setInstance()
     {
         $class = Dispatcher::getControllerClassName();
 
