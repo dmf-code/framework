@@ -21,7 +21,6 @@ class Core
 
     public function __construct()
     {
-
     }
 
     public static function run()
@@ -107,8 +106,6 @@ class Core
     {
         $identify = md5($class.$method);
         if (!isset(self::$instances[$identify])) {
-            var_dump($class);
-            var_dump(class_exists($class));
             if (class_exists($class)) {
                 $o = new $class();
                 if (!empty($method) && method_exists($o, $method)) {
@@ -117,9 +114,6 @@ class Core
                     self::$instances[$identify] = $o;
                 }
             } else {
-                var_dump(class_exists(Config::class));
-                var_dump(Config::class);
-                var_dump($class);
                 //错误处理 do something
                 die('无法取得实例化对象！');
             }
