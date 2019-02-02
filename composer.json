@@ -1,0 +1,23 @@
+{
+    "name": "rice/framework",
+    "description": "The is framework",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "DMF",
+            "email": "1015814408@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+	},
+	"autoload": {
+		"files": [
+			"Utils/Common.php",
+			"Core/Core.php"
+		],
+		"psr-4": {
+			"Rice\\": "/"
+		}
+	}
+}
